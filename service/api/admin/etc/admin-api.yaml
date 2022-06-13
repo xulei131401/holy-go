@@ -1,0 +1,20 @@
+Name: admin-api
+Host: 0.0.0.0
+Port: 8888
+Mode: dev
+Timeout: 10000
+JwtAuth:
+  AccessSecret: abcdefghijklmn
+  AccessExpire: 86400
+Mysql:
+  DataSource: root:xl123456?@tcp(47.105.50.31:3306)/holy-admin?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+CacheRedis:
+  - Host: 47.105.50.31:6379
+    Pass: "123456"
+    Type: node
+#Log:
+#  ServiceName: "legion-api"
+#  Mode: file
+#  Encoding: json
+#  Path: "logs/legion-api/"
+#  TimeFormat: "2006-01-02 15:04:05"

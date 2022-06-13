@@ -1,0 +1,28 @@
+CREATE TABLE `user`
+(
+    `id`              bigint(10) NOT NULL AUTO_INCREMENT,
+    `name`            varchar(10)  NOT NULL DEFAULT '' COMMENT '姓名',
+    `username`        varchar(30)  NOT NULL DEFAULT '' COMMENT '用户名',
+    `mobile`          varchar(20)  NOT NULL DEFAULT '' COMMENT '手机号',
+    `status`          tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态:0-异常;1-正常;2-删除;',
+    `gender`          tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别:1-男;2-女',
+    `birthday`        date         NOT NULL DEFAULT '0000-00-00' COMMENT '生日',
+    `qq`              varchar(20)  NOT NULL DEFAULT '' COMMENT 'QQ',
+    `wechat`          varchar(64)  NOT NULL DEFAULT '' COMMENT '微信',
+    `email`           varchar(30)  NOT NULL DEFAULT '' COMMENT '邮箱',
+    `province`        varchar(10)  NOT NULL DEFAULT '' COMMENT '所在省',
+    `city`            varchar(15)  NOT NULL DEFAULT '' COMMENT '所在市',
+    `district`        varchar(20)  NOT NULL DEFAULT '' COMMENT '所在区',
+    `address`         varchar(500) NOT NULL DEFAULT '' COMMENT '居住地',
+    `longitude`       varchar(16)  NOT NULL DEFAULT '' COMMENT '经度',
+    `latitude`        varchar(16)  NOT NULL DEFAULT '' COMMENT '维度',
+    `pwd`             varchar(40)  NOT NULL DEFAULT '' COMMENT '登录密码',
+    `pwd_salt`        varchar(16)  NOT NULL DEFAULT '' COMMENT '密码盐',
+    `created_at`      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`      timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '业务更新时间',
+    `data_updated_at` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `creator`         varchar(32)  NOT NULL DEFAULT '' COMMENT '创建者',
+    `updater`         varchar(32)  NOT NULL DEFAULT '' COMMENT '更新者',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
