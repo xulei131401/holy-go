@@ -2,12 +2,13 @@ package logic
 
 import (
 	"context"
-	"holy-go/service/api/admin/internal/svc"
-	"holy-go/service/api/admin/internal/types"
-	"holy-go/service/tool/jwt"
 	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"github.com/xulei131401/gox/jwt"
+	"github.com/xulei131401/holy-go/service/api/admin/internal/svc"
+	"github.com/xulei131401/holy-go/service/api/admin/internal/types"
 )
 
 type TokenLogic struct {
@@ -26,10 +27,10 @@ func NewTokenLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TokenLogic 
 
 func (l *TokenLogic) Token(req *types.JwtTokenRequest) (resp *types.JwtTokenResponse, err error) {
 	// todo: add your logic here and delete this line
-	accessExpire := l.svcCtx.Config.JwtAuth.AccessExpire
+	accessExpire := l.svcCtx.Config.Auth.AccessExpire
 
 	now := time.Now().Unix()
-	accessToken, err := jwt.GetToken(now, l.svcCtx.Config.JwtAuth.AccessSecret, nil, accessExpire)
+	accessToken, err := jwt.GetToken(now, l.svcCtx.Config.Auth.AccessSecret, nil, accessExpire)
 	if err != nil {
 		return nil, err
 	}

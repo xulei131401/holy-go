@@ -1,0 +1,127 @@
+package models1
+
+import (
+	"gorm.io/datatypes"
+	"time"
+)
+
+// Store 校区表
+type Store struct {
+	ID            int       `gorm:"primaryKey;column:id" json:"-"`
+	Name          string    `gorm:"column:name" json:"name"`                     // 校区名称
+	CreatedAt     time.Time `gorm:"column:created_at" json:"createdAt"`          // 创建时间
+	UpdatedAt     time.Time `gorm:"column:updated_at" json:"updatedAt"`          // 业务更新时间
+	DataUpdatedAt time.Time `gorm:"column:data_updated_at" json:"dataUpdatedAt"` // 更新时间
+	Creator       string    `gorm:"column:creator" json:"creator"`               // 创建者
+	Updater       string    `gorm:"column:updater" json:"updater"`               // 更新者
+}
+
+// TableName get sql table name.获取数据库表名
+func (m *Store) TableName() string {
+	return "store"
+}
+
+// StoreColumns get sql column name.获取数据库列名
+var StoreColumns = struct {
+	ID            string
+	Name          string
+	CreatedAt     string
+	UpdatedAt     string
+	DataUpdatedAt string
+	Creator       string
+	Updater       string
+}{
+	ID:            "id",
+	Name:          "name",
+	CreatedAt:     "created_at",
+	UpdatedAt:     "updated_at",
+	DataUpdatedAt: "data_updated_at",
+	Creator:       "creator",
+	Updater:       "updater",
+}
+
+// User 用户表
+type User struct {
+	ID            int64          `gorm:"primaryKey;column:id" json:"-"`
+	Name          string         `gorm:"column:name" json:"name"`                     // 姓名
+	Username      string         `gorm:"column:username" json:"username"`             // 用户名
+	Mobile        string         `gorm:"column:mobile" json:"mobile"`                 // 手机号
+	Status        int8           `gorm:"column:status" json:"status"`                 // 状态:0-异常;1-正常;2-删除;
+	StoreID       int            `gorm:"column:store_id" json:"storeId"`              // 校区id
+	Gender        int8           `gorm:"column:gender" json:"gender"`                 // 性别:1-男;2-女
+	Birthday      datatypes.Date `gorm:"column:birthday" json:"birthday"`             // 生日
+	Qq            string         `gorm:"column:qq" json:"qq"`                         // QQ
+	Wechat        string         `gorm:"column:wechat" json:"wechat"`                 // 微信
+	Email         string         `gorm:"column:email" json:"email"`                   // 邮箱
+	Province      string         `gorm:"column:province" json:"province"`             // 所在省
+	City          string         `gorm:"column:city" json:"city"`                     // 所在市
+	District      string         `gorm:"column:district" json:"district"`             // 所在区
+	Address       string         `gorm:"column:address" json:"address"`               // 居住地
+	Longitude     string         `gorm:"column:longitude" json:"longitude"`           // 经度
+	Latitude      string         `gorm:"column:latitude" json:"latitude"`             // 维度
+	Pwd           string         `gorm:"column:pwd" json:"pwd"`                       // 登录密码
+	PwdSalt       string         `gorm:"column:pwd_salt" json:"pwdSalt"`              // 密码盐
+	CreatedAt     time.Time      `gorm:"column:created_at" json:"createdAt"`          // 创建时间
+	UpdatedAt     time.Time      `gorm:"column:updated_at" json:"updatedAt"`          // 业务更新时间
+	DataUpdatedAt time.Time      `gorm:"column:data_updated_at" json:"dataUpdatedAt"` // 更新时间
+	Creator       string         `gorm:"column:creator" json:"creator"`               // 创建者
+	Updater       string         `gorm:"column:updater" json:"updater"`               // 更新者
+}
+
+// TableName get sql table name.获取数据库表名
+func (m *User) TableName() string {
+	return "user"
+}
+
+// UserColumns get sql column name.获取数据库列名
+var UserColumns = struct {
+	ID            string
+	Name          string
+	Username      string
+	Mobile        string
+	Status        string
+	StoreID       string
+	Gender        string
+	Birthday      string
+	Qq            string
+	Wechat        string
+	Email         string
+	Province      string
+	City          string
+	District      string
+	Address       string
+	Longitude     string
+	Latitude      string
+	Pwd           string
+	PwdSalt       string
+	CreatedAt     string
+	UpdatedAt     string
+	DataUpdatedAt string
+	Creator       string
+	Updater       string
+}{
+	ID:            "id",
+	Name:          "name",
+	Username:      "username",
+	Mobile:        "mobile",
+	Status:        "status",
+	StoreID:       "store_id",
+	Gender:        "gender",
+	Birthday:      "birthday",
+	Qq:            "qq",
+	Wechat:        "wechat",
+	Email:         "email",
+	Province:      "province",
+	City:          "city",
+	District:      "district",
+	Address:       "address",
+	Longitude:     "longitude",
+	Latitude:      "latitude",
+	Pwd:           "pwd",
+	PwdSalt:       "pwd_salt",
+	CreatedAt:     "created_at",
+	UpdatedAt:     "updated_at",
+	DataUpdatedAt: "data_updated_at",
+	Creator:       "creator",
+	Updater:       "updater",
+}

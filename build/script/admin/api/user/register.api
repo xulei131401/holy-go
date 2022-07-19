@@ -1,0 +1,24 @@
+syntax = "v2"
+
+info(
+	author: "许磊"
+	date:   "2022-06-14"
+	desc:   "注册接口"
+)
+
+type RegisterRequest {
+	Username string `form:"username,optional" validate:"required"`
+	Name string `form:"name,optional" validate:"required"`
+	Password string `form:"password,optional" validate:"required"`
+}
+
+@server (
+    group: user
+    prefix: user
+)
+
+service admin-api {
+	@doc "用户注册"
+	@handler RegisterHandler
+	post /register (RegisterRequest)
+}

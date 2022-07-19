@@ -1,0 +1,23 @@
+syntax = "v2"
+
+info(
+	author: "许磊"
+	date:   "2022-06-15"
+	desc:   "调试"
+)
+
+type (
+	DebugRequest {
+	}
+)
+
+@server (
+    group: example
+    prefix: example
+)
+
+service admin-api {
+	@doc "debug调试"
+	@handler Debug
+	post /debug (DebugRequest)
+}

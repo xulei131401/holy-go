@@ -42,6 +42,7 @@ type (
 		Username      string    `db:"username"`        // 用户名
 		Mobile        string    `db:"mobile"`          // 手机号
 		Status        int64     `db:"status"`          // 状态:0-异常;1-正常;2-删除;
+		StoreId       int64     `db:"store_id"`        // 校区id
 		Gender        int64     `db:"gender"`          // 性别:1-男;2-女
 		Birthday      time.Time `db:"birthday"`        // 生日
 		Qq            string    `db:"qq"`              // QQ
@@ -105,14 +106,14 @@ func (m *defaultUserModel) FindOneByUsername(ctx context.Context, username strin
 }
 
 func (m *defaultUserModel) Insert(ctx context.Context, data *User) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Name, data.Username, data.Mobile, data.Status, data.Gender, data.Birthday, data.Qq, data.Wechat, data.Email, data.Province, data.City, data.District, data.Address, data.Longitude, data.Latitude, data.Pwd, data.PwdSalt, data.CreatedAt, data.UpdatedAt, data.DataUpdatedAt, data.Creator, data.Updater)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Name, data.Username, data.Mobile, data.Status, data.StoreId, data.Gender, data.Birthday, data.Qq, data.Wechat, data.Email, data.Province, data.City, data.District, data.Address, data.Longitude, data.Latitude, data.Pwd, data.PwdSalt, data.CreatedAt, data.UpdatedAt, data.DataUpdatedAt, data.Creator, data.Updater)
 	return ret, err
 }
 
 func (m *defaultUserModel) Update(ctx context.Context, newData *User) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, newData.Name, newData.Username, newData.Mobile, newData.Status, newData.Gender, newData.Birthday, newData.Qq, newData.Wechat, newData.Email, newData.Province, newData.City, newData.District, newData.Address, newData.Longitude, newData.Latitude, newData.Pwd, newData.PwdSalt, newData.CreatedAt, newData.UpdatedAt, newData.DataUpdatedAt, newData.Creator, newData.Updater, newData.Id)
+	_, err := m.conn.ExecCtx(ctx, query, newData.Name, newData.Username, newData.Mobile, newData.Status, newData.StoreId, newData.Gender, newData.Birthday, newData.Qq, newData.Wechat, newData.Email, newData.Province, newData.City, newData.District, newData.Address, newData.Longitude, newData.Latitude, newData.Pwd, newData.PwdSalt, newData.CreatedAt, newData.UpdatedAt, newData.DataUpdatedAt, newData.Creator, newData.Updater, newData.Id)
 	return err
 }
 

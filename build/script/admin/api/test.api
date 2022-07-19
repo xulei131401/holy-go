@@ -1,0 +1,23 @@
+syntax = "v2"
+
+info(
+	author: "许磊"
+	date:   "2022-06-15"
+	desc:   "调试"
+)
+
+type (
+	TestRequest {
+	}
+)
+
+@server (
+    group: test
+    prefix: test
+)
+
+service admin-api {
+	@doc "test随时可以删除"
+	@handler TTest
+	post /test (TestRequest)
+}

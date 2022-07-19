@@ -1,19 +1,19 @@
-package user
+package example
 
 import (
 	"net/http"
 
-	"github.com/xulei131401/holy-go/service/api/admin/internal/logic/user"
-	"github.com/xulei131401/holy-go/service/api/admin/internal/svc"
-	"github.com/xulei131401/holy-go/service/api/admin/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 
 	"github.com/xulei131401/gox/validate"
+	"github.com/xulei131401/holy-go/service/api/admin/internal/logic/example"
+	"github.com/xulei131401/holy-go/service/api/admin/internal/svc"
+	"github.com/xulei131401/holy-go/service/api/admin/internal/types"
 )
 
-func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func DebugHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.LoginRequest
+		var req types.DebugRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
@@ -24,8 +24,8 @@ func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := user.NewLoginLogic(r.Context(), svcCtx)
-		resp, err := l.Login(&req)
+		l := example.NewDebugLogic(r.Context(), svcCtx)
+		resp, err := l.Debug(&req)
 		if err != nil {
 			httpx.Error(w, err)
 		} else {

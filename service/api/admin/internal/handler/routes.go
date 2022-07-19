@@ -4,27 +4,49 @@ package handler
 import (
 	"net/http"
 
-	user "holy-go/service/api/admin/internal/handler/user"
-	"holy-go/service/api/admin/internal/svc"
+	example "github.com/xulei131401/holy-go/service/api/admin/internal/handler/example"
+	test "github.com/xulei131401/holy-go/service/api/admin/internal/handler/test"
+	user "github.com/xulei131401/holy-go/service/api/admin/internal/handler/user"
+	"github.com/xulei131401/holy-go/service/api/admin/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/from/:name",
-				Handler: AdminHandler(serverCtx),
-			},
-		},
+		[]rest.Route{},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{},
 	)
 
 	server.AddRoutes(
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/debug",
+				Handler: example.DebugHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/example"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/test",
+				Handler: test.TTestHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/test"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
 				Path:    "/token",
 				Handler: TokenHandler(serverCtx),
 			},
@@ -39,6 +61,29 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.LoginHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/register",
+				Handler: user.RegisterHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/info",
+				Handler: user.InfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/user"),
 	)
 }

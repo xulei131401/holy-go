@@ -1,0 +1,18 @@
+syntax = "v2"
+
+info(
+	author: "许磊"
+	date:   "2022-06-13"
+	desc:   "admin服务"
+)
+
+import "common.api"
+import "example.api"
+import "test.api"
+import "jwt.api"
+import "user/login.api"
+import "user/register.api"
+import "user/info.api"
+
+service admin-api {
+}

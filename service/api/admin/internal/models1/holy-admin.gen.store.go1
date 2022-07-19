@@ -1,0 +1,250 @@
+package models1
+
+import (
+	"context"
+	"fmt"
+	"gorm.io/gorm"
+	"time"
+)
+
+type _StoreMgr struct {
+	*_BaseMgr
+}
+
+// StoreMgr open func
+func StoreMgr(db *gorm.DB) *_StoreMgr {
+	if db == nil {
+		panic(fmt.Errorf("StoreMgr need init by db"))
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	return &_StoreMgr{_BaseMgr: &_BaseMgr{DB: db.Table("store"), isRelated: globalIsRelated, ctx: ctx, cancel: cancel, timeout: -1}}
+}
+
+// GetTableName get sql table name.获取数据库名字
+func (obj *_StoreMgr) GetTableName() string {
+	return "store"
+}
+
+// Reset 重置gorm会话
+func (obj *_StoreMgr) Reset() *_StoreMgr {
+	obj.New()
+	return obj
+}
+
+// Get 获取
+func (obj *_StoreMgr) Get() (result Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).First(&result).Error
+
+	return
+}
+
+// Gets 获取批量结果
+func (obj *_StoreMgr) Gets() (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Find(&results).Error
+
+	return
+}
+
+////////////////////////////////// gorm replace /////////////////////////////////
+func (obj *_StoreMgr) Count(count *int64) (tx *gorm.DB) {
+	return obj.DB.WithContext(obj.ctx).Model(Store{}).Count(count)
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////option case ////////////////////////////////////////////
+
+// WithID id获取
+func (obj *_StoreMgr) WithID(id int) Option {
+	return optionFunc(func(o *options) { o.query["id"] = id })
+}
+
+// WithName name获取 校区名称
+func (obj *_StoreMgr) WithName(name string) Option {
+	return optionFunc(func(o *options) { o.query["name"] = name })
+}
+
+// WithCreatedAt created_at获取 创建时间
+func (obj *_StoreMgr) WithCreatedAt(createdAt time.Time) Option {
+	return optionFunc(func(o *options) { o.query["created_at"] = createdAt })
+}
+
+// WithUpdatedAt updated_at获取 业务更新时间
+func (obj *_StoreMgr) WithUpdatedAt(updatedAt time.Time) Option {
+	return optionFunc(func(o *options) { o.query["updated_at"] = updatedAt })
+}
+
+// WithDataUpdatedAt data_updated_at获取 更新时间
+func (obj *_StoreMgr) WithDataUpdatedAt(dataUpdatedAt time.Time) Option {
+	return optionFunc(func(o *options) { o.query["data_updated_at"] = dataUpdatedAt })
+}
+
+// WithCreator creator获取 创建者
+func (obj *_StoreMgr) WithCreator(creator string) Option {
+	return optionFunc(func(o *options) { o.query["creator"] = creator })
+}
+
+// WithUpdater updater获取 更新者
+func (obj *_StoreMgr) WithUpdater(updater string) Option {
+	return optionFunc(func(o *options) { o.query["updater"] = updater })
+}
+
+// GetByOption 功能选项模式获取
+func (obj *_StoreMgr) GetByOption(opts ...Option) (result Store, err error) {
+	options := options{
+		query: make(map[string]interface{}, len(opts)),
+	}
+	for _, o := range opts {
+		o.apply(&options)
+	}
+
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where(options.query).First(&result).Error
+
+	return
+}
+
+// GetByOptions 批量功能选项模式获取
+func (obj *_StoreMgr) GetByOptions(opts ...Option) (results []*Store, err error) {
+	options := options{
+		query: make(map[string]interface{}, len(opts)),
+	}
+	for _, o := range opts {
+		o.apply(&options)
+	}
+
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where(options.query).Find(&results).Error
+
+	return
+}
+
+// SelectPage 分页查询
+func (obj *_StoreMgr) SelectPage(page IPage, opts ...Option) (resultPage IPage, err error) {
+	options := options{
+		query: make(map[string]interface{}, len(opts)),
+	}
+	for _, o := range opts {
+		o.apply(&options)
+	}
+	resultPage = page
+	results := make([]Store, 0)
+	var count int64 // 统计总的记录数
+	query := obj.DB.WithContext(obj.ctx).Model(Store{}).Where(options.query)
+	query.Count(&count)
+	resultPage.SetTotal(count)
+	if len(page.GetOrederItemsString()) > 0 {
+		query = query.Order(page.GetOrederItemsString())
+	}
+	err = query.Limit(int(page.GetSize())).Offset(int(page.Offset())).Find(&results).Error
+
+	resultPage.SetRecords(results)
+	return
+}
+
+//////////////////////////enume case ////////////////////////////////////////////
+
+// GetFromID 通过id获取内容
+func (obj *_StoreMgr) GetFromID(id int) (result Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`id` = ?", id).First(&result).Error
+
+	return
+}
+
+// GetBatchFromID 批量查找
+func (obj *_StoreMgr) GetBatchFromID(ids []int) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`id` IN (?)", ids).Find(&results).Error
+
+	return
+}
+
+// GetFromName 通过name获取内容 校区名称
+func (obj *_StoreMgr) GetFromName(name string) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`name` = ?", name).Find(&results).Error
+
+	return
+}
+
+// GetBatchFromName 批量查找 校区名称
+func (obj *_StoreMgr) GetBatchFromName(names []string) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`name` IN (?)", names).Find(&results).Error
+
+	return
+}
+
+// GetFromCreatedAt 通过created_at获取内容 创建时间
+func (obj *_StoreMgr) GetFromCreatedAt(createdAt time.Time) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`created_at` = ?", createdAt).Find(&results).Error
+
+	return
+}
+
+// GetBatchFromCreatedAt 批量查找 创建时间
+func (obj *_StoreMgr) GetBatchFromCreatedAt(createdAts []time.Time) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`created_at` IN (?)", createdAts).Find(&results).Error
+
+	return
+}
+
+// GetFromUpdatedAt 通过updated_at获取内容 业务更新时间
+func (obj *_StoreMgr) GetFromUpdatedAt(updatedAt time.Time) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`updated_at` = ?", updatedAt).Find(&results).Error
+
+	return
+}
+
+// GetBatchFromUpdatedAt 批量查找 业务更新时间
+func (obj *_StoreMgr) GetBatchFromUpdatedAt(updatedAts []time.Time) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`updated_at` IN (?)", updatedAts).Find(&results).Error
+
+	return
+}
+
+// GetFromDataUpdatedAt 通过data_updated_at获取内容 更新时间
+func (obj *_StoreMgr) GetFromDataUpdatedAt(dataUpdatedAt time.Time) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`data_updated_at` = ?", dataUpdatedAt).Find(&results).Error
+
+	return
+}
+
+// GetBatchFromDataUpdatedAt 批量查找 更新时间
+func (obj *_StoreMgr) GetBatchFromDataUpdatedAt(dataUpdatedAts []time.Time) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`data_updated_at` IN (?)", dataUpdatedAts).Find(&results).Error
+
+	return
+}
+
+// GetFromCreator 通过creator获取内容 创建者
+func (obj *_StoreMgr) GetFromCreator(creator string) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`creator` = ?", creator).Find(&results).Error
+
+	return
+}
+
+// GetBatchFromCreator 批量查找 创建者
+func (obj *_StoreMgr) GetBatchFromCreator(creators []string) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`creator` IN (?)", creators).Find(&results).Error
+
+	return
+}
+
+// GetFromUpdater 通过updater获取内容 更新者
+func (obj *_StoreMgr) GetFromUpdater(updater string) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`updater` = ?", updater).Find(&results).Error
+
+	return
+}
+
+// GetBatchFromUpdater 批量查找 更新者
+func (obj *_StoreMgr) GetBatchFromUpdater(updaters []string) (results []*Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`updater` IN (?)", updaters).Find(&results).Error
+
+	return
+}
+
+//////////////////////////primary index case ////////////////////////////////////////////
+
+// FetchByPrimaryKey primary or index 获取唯一内容
+func (obj *_StoreMgr) FetchByPrimaryKey(id int) (result Store, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(Store{}).Where("`id` = ?", id).First(&result).Error
+
+	return
+}

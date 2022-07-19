@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-servicePath="/Users/xulei/jungle/githubproject/holy-go/service/api/admin"
+source ./common.sh
 
 function start() {
     cd ${servicePath} && \

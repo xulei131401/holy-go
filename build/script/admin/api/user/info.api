@@ -1,0 +1,30 @@
+syntax = "v2"
+
+info(
+	author: "许磊"
+	date:   "2022-06-13"
+	desc:   "用户详情"
+)
+
+type (
+    UserInfoRequest {
+        Id int64 `form:"id,optional" validate:"required"`
+    }
+
+    UserInfoResponse {
+        Id     int64  `json:"id"`
+        Name   string `json:"name"`
+    }
+)
+
+@server (
+    group: user
+    prefix: user
+    jwt: Auth
+)
+
+service admin-api {
+	@doc "用户详情"
+	@handler InfoHandler
+	get /info (UserInfoRequest)
+}

@@ -1,9 +1,9 @@
 Name: admin-api
 Host: 0.0.0.0
-Port: 8888
+Port: 9797
 Mode: dev
 Timeout: 10000
-JwtAuth:
+Auth:
   AccessSecret: abcdefghijklmn
   AccessExpire: 86400
 Mysql:

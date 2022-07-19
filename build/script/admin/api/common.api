@@ -1,0 +1,15 @@
+syntax = "v2"
+
+info(
+	author: "许磊"
+	date:   "2022-06-15"
+	desc:   "公共引用"
+)
+
+type (
+	EmptyReply {
+	}
+)
+
+service admin-api {
+}

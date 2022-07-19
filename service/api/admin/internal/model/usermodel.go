@@ -22,3 +22,7 @@ func NewUserModel(conn sqlx.SqlConn) UserModel {
 		defaultUserModel: newUserModel(conn),
 	}
 }
+
+func (user *User) isNormal() bool {
+	return user.Status == 1
+}

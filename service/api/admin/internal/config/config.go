@@ -12,7 +12,7 @@ type Config struct {
 		DataSource string
 	}
 
-	JwtAuth struct { // jwt鉴权配置
+	Auth struct { // jwt鉴权配置
 		AccessSecret string // jwt密钥
 		AccessExpire int64  // 有效期，单位：秒
 	}

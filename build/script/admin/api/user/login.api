@@ -1,0 +1,30 @@
+syntax = "v2"
+
+info(
+	author: "许磊"
+	date:   "2022-06-13"
+	desc:   "登录接口"
+)
+
+type (
+    LoginRequest {
+        Username string `form:"username,optional" validate:"required"`
+        Password string `form:"password,optional" validate:"required"`
+    }
+
+    LoginResponse {
+        Id     int64  `json:"id"`
+        Name   string `json:"name"`
+    }
+)
+
+@server (
+    group: user
+    prefix: user
+)
+
+service admin-api {
+	@doc "用户登录"
+	@handler LoginHandler
+	post /login (LoginRequest)
+}

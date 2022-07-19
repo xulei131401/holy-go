@@ -5,6 +5,7 @@ CREATE TABLE `user`
     `username`        varchar(30)  NOT NULL DEFAULT '' COMMENT '用户名',
     `mobile`          varchar(20)  NOT NULL DEFAULT '' COMMENT '手机号',
     `status`          tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态:0-异常;1-正常;2-删除;',
+    `store_id`        int(4) NOT NULL DEFAULT '0' COMMENT '校区id',
     `gender`          tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别:1-男;2-女',
     `birthday`        date         NOT NULL DEFAULT '0000-00-00' COMMENT '生日',
     `qq`              varchar(20)  NOT NULL DEFAULT '' COMMENT 'QQ',
